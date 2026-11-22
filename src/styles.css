@@ -25,7 +25,6 @@ body {
   padding-bottom: 86px;
 }
 
-/* Barra superior estilo captura */
 .top-bar {
   height: 64px;
   display: flex;
@@ -69,7 +68,6 @@ main {
   padding: 28px 20px 36px;
 }
 
-/* Ruta de subniveles */
 .route-view {
   display: flex;
   flex-direction: column;
@@ -99,8 +97,13 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
   padding-bottom: 24px;
+}
+
+.route-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .node-slot {
@@ -109,6 +112,17 @@ main {
   align-items: center;
   gap: 8px;
   transition: transform 0.2s ease;
+}
+
+.dotted-connector {
+  width: 0;
+  height: 44px;
+  border-left: 4px dotted #cbd5e1;
+  margin: 6px 0;
+}
+
+.dotted-connector.connector-done {
+  border-left-color: #22c55e;
 }
 
 .node-circle {
@@ -163,7 +177,6 @@ main {
   font-weight: 600;
 }
 
-/* Quiz y tarjetas */
 .back {
   border: 0;
   background: none;
@@ -250,6 +263,92 @@ main {
   cursor: default;
 }
 
+/* Arrastrar y ordenar frase */
+.order-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 54px;
+  padding: 12px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.order-slot {
+  min-width: 72px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1.5px dashed #cbd5e1;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.order-slot.filled {
+  border-style: solid;
+  border-color: #22c55e;
+  background: #f0fdf4;
+  padding: 0;
+}
+
+.slot-placeholder {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.draggable-chip {
+  border: 1.5px solid #cbd5e1;
+  border-bottom-width: 3px;
+  border-radius: 11px;
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px 13px;
+  cursor: grab;
+  user-select: none;
+}
+
+.draggable-chip.in-slot {
+  border: none;
+  background: transparent;
+  color: #15803d;
+  padding: 8px 12px;
+}
+
+.draggable-chip.used-chip {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.order-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.order-actions > button {
+  flex: 1;
+}
+
+/* Emparejar 5 + 5 en 2 columnas */
 .match-board {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -355,7 +454,6 @@ main {
   font-size: 14px;
 }
 
-/* Pestañas Aprender y Progreso */
 .page-intro {
   margin-bottom: 18px;
 }
@@ -397,10 +495,6 @@ main {
   border-bottom-color: #16a34a;
 }
 
-.tabs.compact {
-  margin-top: 16px;
-}
-
 .field-label {
   display: block;
   font-size: 12px;
@@ -433,7 +527,7 @@ main {
 }
 
 .flashcard {
-  min-height: 240px;
+  min-height: 220px;
   margin: 20px 0 14px;
   background: #f0fdf4;
   border: 1.5px solid #bbf7d0;
@@ -450,7 +544,7 @@ main {
 
 .flashcard strong {
   font-family: 'Manrope', sans-serif;
-  font-size: 30px;
+  font-size: 28px;
   color: #15803d;
 }
 
@@ -468,13 +562,43 @@ main {
   flex: 1;
 }
 
+.deck-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.deck-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 11px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.deck-row.active-row {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+.deck-row span {
+  color: #64748b;
+  text-align: right;
+}
+
 .info-list {
   display: grid;
   gap: 10px;
 }
 
 .info-list article,
-.mistake,
 .progress-card {
   background: #ffffff;
   border: 1.5px solid #e5e7eb;
@@ -488,8 +612,7 @@ main {
   margin: 0 0 6px;
 }
 
-.info-list p,
-.mistake p {
+.info-list p {
   font-size: 13px;
   color: #475569;
   line-height: 1.5;
@@ -580,30 +703,6 @@ main {
   cursor: pointer;
 }
 
-.mistake {
-  margin: 10px 0;
-}
-
-.mistake b {
-  font-size: 12px;
-  color: #15803d;
-}
-
-.mistake p {
-  margin: 8px 0;
-}
-
-.mistake small {
-  font-size: 12px;
-  color: #64748b;
-  display: block;
-}
-
-.mistake button {
-  margin-top: 10px;
-  padding: 8px 12px;
-}
-
 .empty {
   text-align: center;
   padding: 36px 12px;
@@ -611,7 +710,6 @@ main {
   font-size: 14px;
 }
 
-/* Barra inferior fija estilo captura */
 .bottom-nav {
   position: fixed;
   bottom: 0;
