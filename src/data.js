@@ -1,5 +1,16 @@
 export const LEVELS = ["A1.1", "A1.2", "A2.1", "A2.2", "B1.1", "B1.2", "B2.1", "B2.2"];
 
+export const LEVEL_LABELS = {
+  "A1.1": "Nivel 1 (A1.1)",
+  "A1.2": "Nivel 2 (A1.2)",
+  "A2.1": "Nivel 3 (A2.1)",
+  "A2.2": "Nivel 4 (A2.2)",
+  "B1.1": "Nivel 5 (B1.1)",
+  "B1.2": "Nivel 6 (B1.2)",
+  "B2.1": "Nivel 7 (B2.1)",
+  "B2.2": "Nivel 8 (B2.2)"
+};
+
 export const TOPICS = [
   { name: "Saludos, despedidas y cortesía", grammar: "Saludos, despedidas, fórmulas y cortesía" },
   { name: "El tiempo cronológico", grammar: "Días, meses, estaciones y expresiones temporales" },
@@ -18,20 +29,20 @@ export const TOPICS = [
   { name: "Animales", grammar: "Animales domésticos, salvajes y zoología" }
 ];
 
-const RAW_QUESTIONS = [
-  // TEMA 1: SALUDOS, DESPEDIDAS Y CORTESÍA
+const CORE_QUESTIONS = [
+  // TEMA 0: SALUDOS, DESPEDIDAS Y CORTESÍA
   { topicIndex: 0, level: "A1", type: "choice", question: "¿Cómo se dice «buenos días»?", options: ["Gabon", "Egun on", "Agur", "Mesedez"], answer: "Egun on" },
   { topicIndex: 0, level: "A1", type: "order", question: "Ordena las palabras para decir «Muchas gracias, perdón»:", words: ["barkatu", "Eskerrik asko,"], answer: "Eskerrik asko, barkatu" },
-  { topicIndex: 0, level: "A1", type: "match", question: "Empareja cada palabra en euskera con su significado en español:", pairs: [["Kaixo", "Hola"], ["Agur", "Adiós"], ["Mesedez", "Por favor"], ["Bai", "Sí"], ["Ez", "No"]] },
+  { topicIndex: 0, level: "A1", type: "match", question: "Empareja cada palabra con su significado:", pairs: [["Kaixo", "Hola"], ["Agur", "Adiós"], ["Mesedez", "Por favor"], ["Bai", "Sí"], ["Ez", "No"]] },
   { topicIndex: 0, level: "A2", type: "choice", question: "¿Qué significa «Zorionak»?", options: ["De nada", "Hasta luego", "Felicidades", "Bienvenido"], answer: "Felicidades" },
   { topicIndex: 0, level: "A2", type: "order", question: "Ordena las palabras para decir «Bienvenido, ¿qué tal?»:", words: ["zer", "Ongi etorri,", "moduz?"], answer: "Ongi etorri, zer moduz?" },
-  { topicIndex: 0, level: "A2", type: "match", question: "Empareja cada expresión en euskera con su traducción:", pairs: [["Gero arte", "Hasta luego"], ["Bihar arte", "Hasta mañana"], ["Ez horregatik", "De nada"], ["Ondo pasa", "Pásalo bien"], ["Urte askotarako", "Mucho gusto"]] },
+  { topicIndex: 0, level: "A2", type: "match", question: "Empareja cada expresión con su traducción:", pairs: [["Gero arte", "Hasta luego"], ["Bihar arte", "Hasta mañana"], ["Ez horregatik", "De nada"], ["Ondo pasa", "Pásalo bien"], ["Urte askotarako", "Felicidades / muchos años"]] },
   { topicIndex: 0, level: "B1", type: "choice", question: "¿Cuál es el significado de «barkamena eskatu»?", options: ["Dar las gracias", "Pedir perdón", "Desear suerte", "Presentarse"], answer: "Pedir perdón" },
   { topicIndex: 0, level: "B1", type: "order", question: "Ordena las palabras para decir «Buen viaje y buen provecho»:", words: ["egin", "eta", "Bidaia on", "on"], answer: "Bidaia on eta on egin" },
-  { topicIndex: 0, level: "B2", type: "choice", question: "¿Cómo se dice «atentamente» al despedirse en una carta formal?", options: ["Begirunea", "Adeitasunez", "Abegikorra", "Goraintziak"], answer: "Adeitasunez" },
+  { topicIndex: 0, level: "B2", type: "choice", question: "¿Cómo se dice «atentamente» en una carta formal?", options: ["Begirunea", "Adeitasunez", "Abegikorra", "Goraintziak"], answer: "Adeitasunez" },
   { topicIndex: 0, level: "B2", type: "match", question: "Empareja los términos avanzados de cortesía:", pairs: [["Begirunea", "Respeto / consideración"], ["Abegikorra", "Acogedor / hospitalario"], ["Goraintziak", "Recuerdos / saludos"], ["Zoriondu", "Felicitar"], ["Gortesia", "Cortesía"]] },
 
-  // TEMA 2: EL TIEMPO CRONOLÓGICO
+  // TEMA 1: EL TIEMPO CRONOLÓGICO
   { topicIndex: 1, level: "A1", type: "choice", question: "¿Cómo se dice «ayer»?", options: ["Gaur", "Bihar", "Atzo", "Orain"], answer: "Atzo" },
   { topicIndex: 1, level: "A1", type: "order", question: "Ordena las palabras para decir «Hoy es buen día»:", words: ["egun ona", "Gaur", "da"], answer: "Gaur egun ona da" },
   { topicIndex: 1, level: "A1", type: "match", question: "Empareja cada unidad de tiempo:", pairs: [["Eguna", "Día"], ["Astea", "Semana"], ["Hilabetea", "Mes"], ["Urtea", "Año"], ["Gaua", "Noche"]] },
@@ -41,9 +52,9 @@ const RAW_QUESTIONS = [
   { topicIndex: 1, level: "B1", type: "choice", question: "¿Qué significa «Etzi»?", options: ["Anteayer", "Pasado mañana", "Fin de semana", "A menudo"], answer: "Pasado mañana" },
   { topicIndex: 1, level: "B1", type: "order", question: "Ordena las palabras para decir «Nunca llego a tiempo»:", words: ["garaiz", "Ez naiz", "inoiz", "iristen"], answer: "Ez naiz inoiz garaiz iristen" },
   { topicIndex: 1, level: "B2", type: "choice", question: "¿Cómo se dice «siglo» en euskera?", options: ["Hamarkada", "Belaunaldia", "Mendea", "Iraupena"], answer: "Mendea" },
-  { topicIndex: 1, level: "B2", type: "match", question: "Empareja los conceptos temporales complejos:", pairs: [["Etorkizuna", "Futuro"], ["Iragana", "Pasado"], ["Atzerapena", "Retraso"], ["Iraupena", "Duración"], ["Aldi berean", "Al mismo tiempo"]] },
+  { topicIndex: 1, level: "B2", type: "match", question: "Empareja los conceptos temporales avanzados:", pairs: [["Etorkizuna", "Futuro"], ["Iragana", "Pasado"], ["Atzerapena", "Retraso"], ["Iraupena", "Duración"], ["Aldi berean", "Al mismo tiempo"]] },
 
-  // TEMA 3: EL CUERPO HUMANO Y LA SALUD
+  // TEMA 2: EL CUERPO HUMANO Y LA SALUD
   { topicIndex: 2, level: "A1", type: "choice", question: "¿Cómo se dice «mano»?", options: ["Burua", "Eskua", "Hanka", "Begia"], answer: "Eskua" },
   { topicIndex: 2, level: "A1", type: "order", question: "Ordena las palabras para decir «Me duele la cabeza»:", words: ["daukat", "Buruko", "mina"], answer: "Buruko mina daukat" },
   { topicIndex: 2, level: "A1", type: "match", question: "Empareja las partes del cuerpo y salud:", pairs: [["Ahoa", "Boca"], ["Belarria", "Oreja"], ["Sudurra", "Nariz"], ["Sabela", "Barriga"], ["Sendagilea", "Médico"]] },
@@ -55,19 +66,19 @@ const RAW_QUESTIONS = [
   { topicIndex: 2, level: "B2", type: "choice", question: "¿Cómo se dice «vacuna» en euskera?", options: ["Ebakuntza", "Txertoa", "Sendagaia", "Sintoma"], answer: "Txertoa" },
   { topicIndex: 2, level: "B2", type: "match", question: "Empareja el vocabulario médico avanzado:", pairs: [["Gaixotasuna", "Enfermedad"], ["Ebakuntza", "Operación quirúrgica"], ["Prebentzioa", "Prevención"], ["Sendagaia", "Fármaco"], ["Arnasketa", "Respiración"]] },
 
-  // TEMA 4: LA CASA Y EL MOBILIARIO
+  // TEMA 3: LA CASA Y EL MOBILIARIO
   { topicIndex: 3, level: "A1", type: "choice", question: "¿Cómo se dice «llave»?", options: ["Atea", "Leihoa", "Giltza", "Ohea"], answer: "Giltza" },
   { topicIndex: 3, level: "A1", type: "order", question: "Ordena las palabras para decir «La silla está en la cocina»:", words: ["dago", "sukaldean", "Aulkia"], answer: "Aulkia sukaldean dago" },
-  { topicIndex: 3, level: "A1", type: "match", question: "Empareja cada estancia u objeto de la casa:", pairs: [["Etxea", "Casa"], ["Mahaia", "Mesa"], ["Komuna", "Baño"], ["Logela", "Dormitorio"], ["Leihoa", "Ventana"]] },
+  { topicIndex: 3, level: "A1", type: "match", question: "Empareja cada estancia u objeto:", pairs: [["Etxea", "Casa"], ["Mahaia", "Mesa"], ["Komuna", "Baño"], ["Logela", "Dormitorio"], ["Leihoa", "Ventana"]] },
   { topicIndex: 3, level: "A2", type: "choice", question: "¿Qué electrodoméstico es «Hozkailua»?", options: ["Lavadora", "Nevera", "Espejo", "Armario"], answer: "Nevera" },
   { topicIndex: 3, level: "A2", type: "order", question: "Ordena las palabras para decir «Enciende la luz del salón»:", words: ["argia", "Egongelako", "piztu"], answer: "Egongelako argia piztu" },
   { topicIndex: 3, level: "A2", type: "match", question: "Empareja cada elemento de la vivienda:", pairs: [["Armairua", "Armario"], ["Ispilua", "Espejo"], ["Garbigailua", "Lavadora"], ["Eskailerak", "Escaleras"], ["Teilatua", "Tejado"]] },
   { topicIndex: 3, level: "B1", type: "choice", question: "¿Qué significa «Ganbara»?", options: ["Sótano", "Balcón", "Desván", "Ascensor"], answer: "Desván" },
   { topicIndex: 3, level: "B1", type: "order", question: "Ordena las palabras para decir «El vecino limpia las escaleras»:", words: ["garbitzen ditu", "eskailerak", "Bizilagunak"], answer: "Bizilagunak eskailerak garbitzen ditu" },
   { topicIndex: 3, level: "B2", type: "choice", question: "¿Cómo se dice «reformar / renovar» una vivienda?", options: ["Apaindu", "Berriztatu", "Isolatu", "Alokatu"], answer: "Berriztatu" },
-  { topicIndex: 3, level: "B2", type: "match", question: "Empareja los términos inmobiliarios y del hogar:", pairs: [["Etxebizitza", "Vivienda"], ["Isolamendua", "Aislamiento"], ["Argiztapena", "Iluminación"], ["Erosotasuna", "Comodidad"], ["Jabetza", "Propiedad"]] },
+  { topicIndex: 3, level: "B2", type: "match", question: "Empareja los términos de vivienda:", pairs: [["Etxebizitza", "Vivienda"], ["Isolamendua", "Aislamiento"], ["Argiztapena", "Iluminación"], ["Erosotasuna", "Comodidad"], ["Jabetza", "Propiedad"]] },
 
-  // TEMA 5: LA CIUDAD Y LAS DIRECCIONES
+  // TEMA 4: LA CIUDAD Y LAS DIRECCIONES
   { topicIndex: 4, level: "A1", type: "choice", question: "¿Cómo se dice «izquierda»?", options: ["Eskuina", "Ezkerra", "Hurbil", "Urruti"], answer: "Ezkerra" },
   { topicIndex: 4, level: "A1", type: "order", question: "Ordena las palabras para decir «El hospital está lejos»:", words: ["dago", "urruti", "Ospitalea"], answer: "Ospitalea urruti dago" },
   { topicIndex: 4, level: "A1", type: "match", question: "Empareja cada lugar de la ciudad:", pairs: [["Kalea", "Calle"], ["Plaza", "Plaza"], ["Denda", "Tienda"], ["Eskola", "Escuela"], ["Geltokia", "Estación"]] },
@@ -79,7 +90,7 @@ const RAW_QUESTIONS = [
   { topicIndex: 4, level: "B2", type: "choice", question: "¿Cómo se dice «accesibilidad» en urbanismo?", options: ["Azpiegitura", "Irisgarritasuna", "Zabalgunea", "Biztanleria"], answer: "Irisgarritasuna" },
   { topicIndex: 4, level: "B2", type: "match", question: "Empareja los conceptos urbanos avanzados:", pairs: [["Hirigintza", "Urbanismo"], ["Azpiegitura", "Infraestructura"], ["Ingurunea", "Entorno"], ["Biztanleria", "Población"], ["Zabalgunea", "Ensanche"]] },
 
-  // TEMA 6: TRANSPORTE Y VIAJES
+  // TEMA 5: TRANSPORTE Y VIAJES
   { topicIndex: 5, level: "A1", type: "choice", question: "¿Cómo se dice «avión»?", options: ["Trena", "Hegazkina", "Itsasontzia", "Autobusa"], answer: "Hegazkina" },
   { topicIndex: 5, level: "A1", type: "order", question: "Ordena las palabras para decir «Voy en tren a Bilbao»:", words: ["noa", "trenez", "Bilbora"], answer: "Bilbora trenez noa" },
   { topicIndex: 5, level: "A1", type: "match", question: "Empareja cada medio de transporte y viaje:", pairs: [["Autoa", "Coche"], ["Bizikleta", "Bicicleta"], ["Txartela", "Billete"], ["Geltokia", "Parada"], ["Mapa", "Mapa"]] },
@@ -91,7 +102,7 @@ const RAW_QUESTIONS = [
   { topicIndex: 5, level: "B2", type: "choice", question: "¿Cómo se dice «aduana» en euskera?", options: ["Muga", "Aduana", "Garraioa", "Bidesaria"], answer: "Aduana" },
   { topicIndex: 5, level: "B2", type: "match", question: "Empareja los términos avanzados de transporte:", pairs: [["Garraio publikoa", "Transporte público"], ["Bidesaria", "Peaje"], ["Aldaketa", "Transbordo"], ["Ainguralekua", "Puerto / fondeadero"], ["Auto-ilara", "Embotellamiento"]] },
 
-  // TEMA 7: ROPA Y CALZADO
+  // TEMA 6: ROPA Y CALZADO
   { topicIndex: 6, level: "A1", type: "choice", question: "¿Cómo se dice «abrigo»?", options: ["Alkandora", "Berokia", "Gona", "Soinekoa"], answer: "Berokia" },
   { topicIndex: 6, level: "A1", type: "order", question: "Ordena las palabras para decir «Llevo zapatos negros»:", words: ["dauzkat", "beltzak", "Zapatak"], answer: "Zapatak beltzak dauzkat" },
   { topicIndex: 6, level: "A1", type: "match", question: "Empareja cada prenda básica:", pairs: [["Prakak", "Pantalones"], ["Kamiseta", "Camiseta"], ["Soinekoa", "Vestido"], ["Zapatak", "Zapatos"], ["Galtzerdiak", "Calcetines"]] },
@@ -101,9 +112,9 @@ const RAW_QUESTIONS = [
   { topicIndex: 6, level: "B1", type: "choice", question: "¿Qué significa «Jantzi» como verbo?", options: ["Desnudarse", "Vestirse / ponerse ropa", "Planchar", "Coser"], answer: "Vestirse / ponerse ropa" },
   { topicIndex: 6, level: "B1", type: "order", question: "Ordena las palabras para decir «Voy a probarme estos pantalones en el probador»:", words: ["probatuko ditut", "probalekuan", "praka hauek"], answer: "Praka hauek probalekuan probatuko ditut" },
   { topicIndex: 6, level: "B2", type: "choice", question: "¿Cómo se dice «algodón» (tejido)?", options: ["Artilea", "Kotoia", "Zeta", "Larrua"], answer: "Kotoia" },
-  { topicIndex: 6, level: "B2", type: "match", question: "Empareja los materiales y términos textiles:", pairs: [["Artilea", "Lana"], ["Larrua", "Cuero / piel"], ["Zeta", "Seda"], ["Ehuna", "Tejido / tela"], ["Moda", "Moda"]] },
+  { topicIndex: 6, level: "B2", type: "match", question: "Empareja los materiales textiles:", pairs: [["Artilea", "Lana"], ["Larrua", "Cuero / piel"], ["Zeta", "Seda"], ["Ehuna", "Tejido / tela"], ["Moda", "Moda"]] },
 
-  // TEMA 8: PROFESIONES Y TRABAJO
+  // TEMA 7: PROFESIONES Y TRABAJO
   { topicIndex: 7, level: "A1", type: "choice", question: "¿Cómo se dice «estudiante»?", options: ["Irakaslea", "Ikaslea", "Langilea", "Nagusia"], answer: "Ikaslea" },
   { topicIndex: 7, level: "A1", type: "order", question: "Ordena las palabras para decir «Mi madre es médica»:", words: ["da", "sendagilea", "Nire ama"], answer: "Nire ama sendagilea da" },
   { topicIndex: 7, level: "A1", type: "match", question: "Empareja cada profesión básica:", pairs: [["Irakaslea", "Profesor/a"], ["Sukaldaria", "Cocinero/a"], ["Polizia", "Policía"], ["Idazkaria", "Secretario/a"], ["Bulegoa", "Oficina"]] },
@@ -112,22 +123,22 @@ const RAW_QUESTIONS = [
   { topicIndex: 7, level: "A2", type: "match", question: "Empareja cada oficio:", pairs: [["Kazetaria", "Periodista"], ["Abokatua", "Abogado/a"], ["Igeltseroa", "Albañil"], ["Nekazaria", "Agricultor/a"], ["Ile-apaintzailea", "Peluquero/a"]] },
   { topicIndex: 7, level: "B1", type: "choice", question: "¿Qué significa «Langabezia»?", options: ["Jubilación", "Huelga", "Desempleo / paro", "Sueldo"], answer: "Desempleo / paro" },
   { topicIndex: 7, level: "B1", type: "order", question: "Ordena las palabras para decir «Mañana tengo una entrevista de trabajo»:", words: ["daukat", "lan-elkarrizketa bat", "Bihar"], answer: "Bihar lan-elkarrizketa bat daukat" },
-  { topicIndex: 7, level: "B2", type: "choice", question: "¿Cómo se dice «sindicalismo / sindicato»?", options: ["Enpresaburua", "Sindikatua", "Hitzarmena", "Kaleratzea"], answer: "Sindikatua" },
+  { topicIndex: 7, level: "B2", type: "choice", question: "¿Cómo se dice «sindicato»?", options: ["Enpresaburua", "Sindikatua", "Hitzarmena", "Kaleratzea"], answer: "Sindikatua" },
   { topicIndex: 7, level: "B2", type: "match", question: "Empareja el vocabulario laboral avanzado:", pairs: [["Soldata", "Sueldo"], ["Greba", "Huelga"], ["Kaleratzea", "Despido"], ["Hitzarmena", "Convenio"], ["Erretiroa", "Jubilación"]] },
 
-  // TEMA 9: EL CLIMA Y LA NATURALEZA
+  // TEMA 8: EL CLIMA Y LA NATURALEZA
   { topicIndex: 8, level: "A1", type: "choice", question: "¿Cómo se dice «frío»?", options: ["Beroa", "Hotza", "Haizea", "Elurra"], answer: "Hotza" },
   { topicIndex: 8, level: "A1", type: "order", question: "Ordena las palabras para decir «Hoy hace mucho sol»:", words: ["egiten du", "eguzki asko", "Gaur"], answer: "Gaur eguzki asko egiten du" },
   { topicIndex: 8, level: "A1", type: "match", question: "Empareja los elementos naturales:", pairs: [["Eguzkia", "Sol"], ["Euria", "Lluvia"], ["Zuhaitza", "Árbol"], ["Itsasoa", "Mar"], ["Lorea", "Flor"]] },
   { topicIndex: 8, level: "A2", type: "choice", question: "¿Qué fenómeno meteorológico es «Ekaitza»?", options: ["Niebla", "Tormenta", "Nieve", "Arcoiris"], answer: "Tormenta" },
   { topicIndex: 8, level: "A2", type: "order", question: "Ordena las palabras para decir «En invierno nieva en la montaña»:", words: ["egiten du", "mendian", "elurra", "Neguan"], answer: "Neguan elurra egiten du mendian" },
-  { topicIndex: 8, level: "A2", type: "match", question: "Empareja cada elemento del paisaje y clima:", pairs: [["Lainoa", "Nube / niebla"], ["Basoa", "Bosque"], ["Ibaia", "Río"], ["Hodeia", "Nube"], ["Lurra", "Tierra / suelo"]] },
+  { topicIndex: 8, level: "A2", type: "match", question: "Empareja cada elemento del paisaje y clima:", pairs: [["Lainoa", "Niebla"], ["Basoa", "Bosque"], ["Ibaia", "Río"], ["Hodeia", "Nube"], ["Lurra", "Tierra / suelo"]] },
   { topicIndex: 8, level: "B1", type: "choice", question: "¿Qué significa «Lehortea»?", options: ["Inundación", "Sequía", "Terremoto", "Humedad"], answer: "Sequía" },
   { topicIndex: 8, level: "B1", type: "order", question: "Ordena las palabras para decir «Debemos proteger el medio ambiente»:", words: ["babestu behar dugu", "Ingurumena"], answer: "Ingurumena babestu behar dugu" },
   { topicIndex: 8, level: "B2", type: "choice", question: "¿Cómo se dice «cambio climático»?", options: ["Berotegi-efektua", "Klima-aldaketa", "Kutsadura", "Birziklapena"], answer: "Klima-aldaketa" },
-  { topicIndex: 8, level: "B2", type: "match", question: "Empareja los términos ecológicos y climáticos:", pairs: [["Kutsadura", "Contaminación"], ["Bioaniztasuna", "Biodiversidad"], ["Jasangarria", "Sostenible"], ["Uholdea", "Inundación"], ["Energia berriztagarria", "Energía renovable"]] },
+  { topicIndex: 8, level: "B2", type: "match", question: "Empareja los términos ecológicos:", pairs: [["Kutsadura", "Contaminación"], ["Bioaniztasuna", "Biodiversidad"], ["Jasangarria", "Sostenible"], ["Uholdea", "Inundación"], ["Energia berriztagarria", "Energía renovable"]] },
 
-  // TEMA 10: ESTADOS DE ÁNIMO Y ADJETIVOS COTIDIANOS
+  // TEMA 9: ESTADOS DE ÁNIMO Y ADJETIVOS COTIDIANOS
   { topicIndex: 9, level: "A1", type: "choice", question: "¿Cómo se dice «triste»?", options: ["Pozik", "Triste", "Haserre", "Nekatuta"], answer: "Triste" },
   { topicIndex: 9, level: "A1", type: "order", question: "Ordena las palabras para decir «El perro es muy grande»:", words: ["da", "oso handia", "Txakurra"], answer: "Txakurra oso handia da" },
   { topicIndex: 9, level: "A1", type: "match", question: "Empareja los adjetivos básicos:", pairs: [["Ona", "Bueno"], ["Txarra", "Malo"], ["Handia", "Grande"], ["Txikia", "Pequeño"], ["Berria", "Nuevo"]] },
@@ -136,22 +147,22 @@ const RAW_QUESTIONS = [
   { topicIndex: 9, level: "A2", type: "match", question: "Empareja los estados y cualidades:", pairs: [["Haserre", "Enfadado"], ["Lasai", "Tranquilo"], ["Garbia", "Limpio"], ["Zikina", "Sucio"], ["Erraza", "Fácil"]] },
   { topicIndex: 9, level: "B1", type: "choice", question: "¿Qué significa «Lotsatia»?", options: ["Valiente", "Tímido/a", "Generoso/a", "Egoísta"], answer: "Tímido/a" },
   { topicIndex: 9, level: "B1", type: "order", question: "Ordena las palabras para decir «Es un ejercicio bastante difícil»:", words: ["da", "nahiko zaila", "Ariketa"], answer: "Ariketa nahiko zaila da" },
-  { topicIndex: 9, level: "B2", type: "choice", question: "¿Cómo se dice «empático/a» o «comprensivo/a»?", options: ["Harroa", "Ulerkorra", "Burugogorra", "Etsikorra"], answer: "Ulerkorra" },
-  { topicIndex: 9, level: "B2", type: "match", question: "Empareja los adjetivos complejos de carácter:", pairs: [["Burugogorra", "Terco / cabezota"], ["Harroa", "Orgulloso / arrogante"], ["Etsikorra", "Pesimista"], ["Eskuzabala", "Generoso"], ["Arduratsua", "Responsable"]] },
+  { topicIndex: 9, level: "B2", type: "choice", question: "¿Cómo se dice «comprensivo/a»?", options: ["Harroa", "Ulerkorra", "Burugogorra", "Etsikorra"], answer: "Ulerkorra" },
+  { topicIndex: 9, level: "B2", type: "match", question: "Empareja los adjetivos de carácter:", pairs: [["Burugogorra", "Terco / cabezota"], ["Harroa", "Orgulloso / arrogante"], ["Etsikorra", "Pesimista"], ["Eskuzabala", "Generoso"], ["Arduratsua", "Responsable"]] },
 
-  // TEMA 11: RUTINAS DIARIAS Y VERBOS DE ACCIÓN
+  // TEMA 10: RUTINAS DIARIAS Y VERBOS DE ACCIÓN
   { topicIndex: 10, level: "A1", type: "choice", question: "¿Qué verbo significa «comer»?", options: ["Edan", "Jan", "Lo egin", "Joan"], answer: "Jan" },
   { topicIndex: 10, level: "A1", type: "order", question: "Ordena las palabras para decir «Me despierto a las siete»:", words: ["esnatzen naiz", "Zazpietan"], answer: "Zazpietan esnatzen naiz" },
   { topicIndex: 10, level: "A1", type: "match", question: "Empareja los verbos esenciales:", pairs: [["Edan", "Beber"], ["Etorri", "Venir"], ["Egin", "Hacer"], ["Eduki", "Tener"], ["Nahi izan", "Querer"]] },
   { topicIndex: 10, level: "A2", type: "choice", question: "¿Qué acción es «Hortzak garbitu»?", options: ["Ducharse", "Lavarse los dientes", "Peinarse", "Desayunar"], answer: "Lavarse los dientes" },
   { topicIndex: 10, level: "A2", type: "order", question: "Ordena las palabras para decir «Desayuno café con leche todas las mañanas»:", words: ["gosaltzen dut", "kafesnea", "Goizero"], answer: "Goizero kafesnea gosaltzen dut" },
-  { topicIndex: 10, level: "A2", type: "match", question: "Empareja las rutinas diarias:", pairs: [["Dutxatu", "Ducharse"], ["Bazkaldu", "Comer (al mediodía)"], ["Afaldu", "Cenar"], ["Oheratu", "Acostarse"], ["Atseden hartu", "Descansar"]] },
+  { topicIndex: 10, level: "A2", type: "match", question: "Empareja las rutinas diarias:", pairs: [["Dutxatu", "Ducharse"], ["Bazkaldu", "Comer (mediodía)"], ["Afaldu", "Cenar"], ["Oheratu", "Acostarse"], ["Atseden hartu", "Descansar"]] },
   { topicIndex: 10, level: "B1", type: "choice", question: "¿Qué significa «Gogoratu»?", options: ["Olvidar", "Recordar", "Explicar", "Decidir"], answer: "Recordar" },
   { topicIndex: 10, level: "B1", type: "order", question: "Ordena las palabras para decir «Se me ha olvidado comprar el pan»:", words: ["ahaztu zait", "erostea", "Ogia"], answer: "Ogia erostea ahaztu zait" },
   { topicIndex: 10, level: "B2", type: "choice", question: "¿Cómo se dice «acostumbrarse»?", options: ["Ohitu", "Damutu", "Harritu", "Aspertu"], answer: "Ohitu" },
-  { topicIndex: 10, level: "B2", type: "match", question: "Empareja los verbos de acción avanzados:", pairs: [["Erabaki", "Decidir"], ["Damutu", "Arrepentirse"], ["Lortu", "Conseguir / lograr"], ["Saiatu", "Intentar"], ["Proposatu", "Proponer"]] },
+  { topicIndex: 10, level: "B2", type: "match", question: "Empareja los verbos avanzados:", pairs: [["Erabaki", "Decidir"], ["Damutu", "Arrepentirse"], ["Lortu", "Conseguir / lograr"], ["Saiatu", "Intentar"], ["Proposatu", "Proponer"]] },
 
-  // TEMA 12: OCIO, DEPORTES Y AFICIONES
+  // TEMA 11: OCIO, DEPORTES Y AFICIONES
   { topicIndex: 11, level: "A1", type: "choice", question: "¿Cómo se dice «leer»?", options: ["Idatzi", "Irakurri", "Abestu", "Dantzatu"], answer: "Irakurri" },
   { topicIndex: 11, level: "A1", type: "order", question: "Ordena las palabras para decir «Me gusta mucho la música»:", words: ["zait", "musika", "Asko gustatzen"], answer: "Asko gustatzen zait musika" },
   { topicIndex: 11, level: "A1", type: "match", question: "Empareja las actividades de ocio:", pairs: [["Kirola", "Deporte"], ["Dantzatu", "Bailar"], ["Abestu", "Cantar"], ["Margotu", "Pintar / dibujar"], ["Jolastu", "Jugar"]] },
@@ -161,33 +172,33 @@ const RAW_QUESTIONS = [
   { topicIndex: 11, level: "B1", type: "choice", question: "¿Qué significa «Txapelketa»?", options: ["Entrenamiento", "Campeonato / torneo", "Árbitro", "Empate"], answer: "Campeonato / torneo" },
   { topicIndex: 11, level: "B1", type: "order", question: "Ordena las palabras para decir «Nuestro equipo ganó el partido ayer»:", words: ["irabazi zuen", "partida atzo", "Gure taldeak"], answer: "Gure taldeak partida atzo irabazi zuen" },
   { topicIndex: 11, level: "B2", type: "choice", question: "¿Cómo se dice «aficionado/a» o «hincha»?", options: ["Aurkaria", "Zalea", "Epailea", "Ikuslea"], answer: "Zalea" },
-  { topicIndex: 11, level: "B2", type: "match", question: "Empareja el vocabulario cultural y deportivo avanzado:", pairs: [["Ikuskizuna", "Espectáculo"], ["Aurkaria", "Rival / oponente"], ["Ikuslea", "Espectador"], ["Sorkuntza", "Creación artística"], ["Aisialdia", "Ocio / tiempo libre"]] },
+  { topicIndex: 11, level: "B2", type: "match", question: "Empareja el vocabulario cultural y deportivo:", pairs: [["Ikuskizuna", "Espectáculo"], ["Aurkaria", "Rival / oponente"], ["Ikuslea", "Espectador"], ["Sorkuntza", "Creación artística"], ["Aisialdia", "Ocio / tiempo libre"]] },
 
-  // TEMA 13: DINERO Y COMPRAS
+  // TEMA 12: DINERO Y COMPRAS
   { topicIndex: 12, level: "A1", type: "choice", question: "¿Cómo se dice «pagar»?", options: ["Erosi", "Saldu", "Ordaindu", "Eskatu"], answer: "Ordaindu" },
   { topicIndex: 12, level: "A1", type: "order", question: "Ordena las palabras para decir «¿Cuánto cuesta esto?»:", words: ["balio du", "honek?", "Zenbat"], answer: "Zenbat balio du honek?" },
   { topicIndex: 12, level: "A1", type: "match", question: "Empareja los términos básicos de compra:", pairs: [["Dirua", "Dinero"], ["Prezioa", "Precio"], ["Merkea", "Barato"], ["Garestia", "Caro"], ["Txartela", "Tarjeta"]] },
-  { topicIndex: 12, level: "A2", type: "choice", question: "¿Qué significa «Beherapenak»?", options: ["Impuestos", "Rebajas / descuentos", "Recibo", "Cambio (vuelta)"], answer: "Rebajas / descuentos" },
+  { topicIndex: 12, level: "A2", type: "choice", question: "¿Qué significa «Beherapenak»?", options: ["Impuestos", "Rebajas / descuentos", "Recibo", "Cambio"], answer: "Rebajas / descuentos" },
   { topicIndex: 12, level: "A2", type: "order", question: "Ordena las palabras para decir «Quiero pagar en efectivo, por favor»:", words: ["ordaindu nahi dut,", "Eskudirutan", "mesedez"], answer: "Eskudirutan ordaindu nahi dut, mesedez" },
-  { topicIndex: 12, level: "A2", type: "match", question: "Empareja el vocabulario comercial:", pairs: [["Ordainagiria", "Recibo / ticket"], ["Bezeroa", "Cliente"], ["Kutxa", "Caja (cobro)"], ["Eskudirua", "Dinero en efectivo"], ["Eskaintza", "Oferta"]] },
-  { topicIndex: 12, level: "B1", type: "choice", question: "¿Qué significa «Itzuli» en una tienda?", options: ["Probar", "Devolver (un artículo o dinero)", "Envolver", "Reservar"], answer: "Devolver (un artículo o dinero)" },
+  { topicIndex: 12, level: "A2", type: "match", question: "Empareja el vocabulario comercial:", pairs: [["Ordainagiria", "Recibo / ticket"], ["Bezeroa", "Cliente"], ["Kutxa", "Caja"], ["Eskudirua", "Dinero en efectivo"], ["Eskaintza", "Oferta"]] },
+  { topicIndex: 12, level: "B1", type: "choice", question: "¿Qué significa «Itzuli» en una tienda?", options: ["Probar", "Devolver", "Envolver", "Reservar"], answer: "Devolver" },
   { topicIndex: 12, level: "B1", type: "order", question: "Ordena las palabras para decir «He ahorrado dinero para comprar un coche»:", words: ["aurreztu dut", "auto bat erosteko", "Dirua"], answer: "Dirua aurreztu dut auto bat erosteko" },
   { topicIndex: 12, level: "B2", type: "choice", question: "¿Cómo se dice «factura» en euskera?", options: ["Aurrekontua", "Faktura", "Mailegua", "Zerga"], answer: "Faktura" },
-  { topicIndex: 12, level: "B2", type: "match", question: "Empareja los términos financieros y de consumo:", pairs: [["Aurrekontua", "Presupuesto"], ["Mailegua", "Préstamo"], ["Zerga", "Impuesto"], ["Kontsumitzailea", "Consumidor"], ["Bermea", "Garantía"]] },
+  { topicIndex: 12, level: "B2", type: "match", question: "Empareja los términos financieros:", pairs: [["Aurrekontua", "Presupuesto"], ["Mailegua", "Préstamo"], ["Zerga", "Impuesto"], ["Kontsumitzailea", "Consumidor"], ["Bermea", "Garantía"]] },
 
-  // TEMA 14: TECNOLOGÍA Y COMUNICACIÓN
+  // TEMA 13: TECNOLOGÍA Y COMUNICACIÓN
   { topicIndex: 13, level: "A1", type: "choice", question: "¿Cómo se dice «ordenador»?", options: ["Telefonoa", "Ordenagailua", "Telebista", "Pantaila"], answer: "Ordenagailua" },
   { topicIndex: 13, level: "A1", type: "order", question: "Ordena las palabras para decir «Te llamo por teléfono»:", words: ["deitzen dizut", "Telefonoz"], answer: "Telefonoz deitzen dizut" },
   { topicIndex: 13, level: "A1", type: "match", question: "Empareja los términos tecnológicos básicos:", pairs: [["Mezua", "Mensaje"], ["Pantaila", "Pantalla"], ["Argazkia", "Foto"], ["Bideoa", "Vídeo"], ["Sarea", "Internet"]] },
   { topicIndex: 13, level: "A2", type: "choice", question: "¿Qué es «Pasahitza»?", options: ["Teclado", "Contraseña", "Ratón", "Archivo"], answer: "Contraseña" },
   { topicIndex: 13, level: "A2", type: "order", question: "Ordena las palabras para decir «Envíame un correo electrónico hoy»:", words: ["mezu elektroniko bat", "Bidali iezadazu", "gaur"], answer: "Bidali iezadazu mezu elektroniko bat gaur" },
-  { topicIndex: 13, level: "A2", type: "match", question: "Empareja los componentes y acciones digitales:", pairs: [["Teklatua", "Teclado"], ["Sagua", "Ratón"], ["Artxiboa", "Archivo"], ["Deskargatu", "Descargar"], ["Gorde", "Guardar"]] },
+  { topicIndex: 13, level: "A2", type: "match", question: "Empareja componentes y acciones digitales:", pairs: [["Teklatua", "Teclado"], ["Sagua", "Ratón"], ["Artxiboa", "Archivo"], ["Deskargatu", "Descargar"], ["Gorde", "Guardar"]] },
   { topicIndex: 13, level: "B1", type: "choice", question: "¿Qué significa «Sare sozialak»?", options: ["Correo postal", "Redes sociales", "Cbertura móvil", "Base de datos"], answer: "Redes sociales" },
   { topicIndex: 13, level: "B1", type: "order", question: "Ordena las palabras para decir «No tengo cobertura en este pueblo»:", words: ["herri honetan", "Ez daukat", "estaldurarik"], answer: "Ez daukat estaldurarik herri honetan" },
   { topicIndex: 13, level: "B2", type: "choice", question: "¿Cómo se dice «inteligencia artificial»?", options: ["Errealitate birtuala", "Adimen artifiziala", "Datu-basea", "Pribatutasuna"], answer: "Adimen artifiziala" },
-  { topicIndex: 13, level: "B2", type: "match", question: "Empareja el vocabulario tecnológico avanzado:", pairs: [["Pribatutasuna", "Privacidad"], ["Eguneratu", "Actualizar"], ["Zibersegurtasuna", "Ciberseguridad"], ["Gailua", "Dispositivo"], ["Esteka", "Enlace (link)"]] },
+  { topicIndex: 13, level: "B2", type: "match", question: "Empareja el vocabulario tecnológico avanzado:", pairs: [["Pribatutasuna", "Privacidad"], ["Eguneratu", "Actualizar"], ["Zibersegurtasuna", "Ciberseguridad"], ["Gailua", "Dispositivo"], ["Esteka", "Enlace"]] },
 
-  // TEMA 15: ANIMALES
+  // TEMA 14: ANIMALES
   { topicIndex: 14, level: "A1", type: "choice", question: "¿Cómo se dice «pájaro»?", options: ["Arraina", "Txoria", "Zaldia", "Ardia"], answer: "Txoria" },
   { topicIndex: 14, level: "A1", type: "order", question: "Ordena las palabras para decir «El gato bebe leche»:", words: ["edaten du", "esnea", "Katuak"], answer: "Katuak esnea edaten du" },
   { topicIndex: 14, level: "A1", type: "match", question: "Empareja los animales básicos:", pairs: [["Txakurra", "Perro"], ["Behia", "Vaca"], ["Zaldia", "Caballo"], ["Arraina", "Pez"], ["Ardia", "Oveja"]] },
@@ -211,27 +222,120 @@ const LEVEL_MAP = {
   "B2.2": "B2"
 };
 
+function seededRandom(seed) {
+  let s = seed % 2147483647;
+  if (s <= 0) s += 2147483646;
+  return () => {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+function shuffleWithSeed(list, rng) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function expandToThirtyQuestions(baseLvl, topicIndex) {
+  const matching = CORE_QUESTIONS.filter(
+    (q) => q.topicIndex === topicIndex && q.level === baseLvl
+  );
+  const allPairsForTopic = CORE_QUESTIONS
+    .filter((q) => q.topicIndex === topicIndex && q.type === "match")
+    .flatMap((q) => q.pairs);
+  const allChoicesForTopic = CORE_QUESTIONS
+    .filter((q) => q.topicIndex === topicIndex && q.type === "choice");
+  const allOrdersForTopic = CORE_QUESTIONS
+    .filter((q) => q.topicIndex === topicIndex && q.type === "order");
+
+  const rng = seededRandom(`${baseLvl}-${topicIndex}`.split("").reduce((acc, ch) => acc * 31 + ch.charCodeAt(0), 7));
+  const result = [];
+
+  for (let idx = 0; idx < 30; idx++) {
+    const template = matching[idx % matching.length];
+    if (idx < matching.length) {
+      result.push({ ...template });
+      continue;
+    }
+
+    const mode = idx % 3;
+    if (mode === 0 && allPairsForTopic.length >= 5) {
+      const pool = shuffleWithSeed(allPairsForTopic, rng).slice(0, 5);
+      const target = pool[Math.floor(rng() * pool.length)];
+      const distractors = shuffleWithSeed(
+        allPairsForTopic.filter(([, es]) => es !== target[1]).map(([, es]) => es),
+        rng
+      ).slice(0, 3);
+      const options = shuffleWithSeed([target[1], ...distractors], rng);
+      result.push({
+        topicIndex,
+        level: baseLvl,
+        type: "choice",
+        question: `¿Qué significa «${target[0]}»?`,
+        options,
+        answer: target[1]
+      });
+    } else if (mode === 1 && allPairsForTopic.length >= 5) {
+      const fivePairs = shuffleWithSeed(allPairsForTopic, rng).slice(0, 5);
+      result.push({
+        topicIndex,
+        level: baseLvl,
+        type: "match",
+        question: "Empareja las 5 palabras en euskera con su traducción:",
+        pairs: fivePairs
+      });
+    } else if (allOrdersForTopic.length > 0) {
+      const ord = allOrdersForTopic[idx % allOrdersForTopic.length];
+      result.push({
+        topicIndex,
+        level: baseLvl,
+        type: "order",
+        question: ord.question,
+        words: shuffleWithSeed(ord.words, rng),
+        answer: ord.answer
+      });
+    } else if (allChoicesForTopic.length > 0) {
+      const ch = allChoicesForTopic[idx % allChoicesForTopic.length];
+      result.push({
+        ...ch,
+        options: shuffleWithSeed(ch.options, rng)
+      });
+    }
+  }
+
+  return result.slice(0, 30);
+}
+
 export const QUESTION_BANK = {};
+export const FLASHCARDS_BY_LEVEL_TOPIC = {};
+
 LEVELS.forEach((lvl) => {
   const baseLvl = LEVEL_MAP[lvl];
-  TOPICS.forEach((_, tIdx) => {
-    const matching = RAW_QUESTIONS.filter(
-      (q) => q.topicIndex === tIdx && q.level === baseLvl
-    );
-    QUESTION_BANK[`${lvl}-${tIdx}`] = matching.length > 0
-      ? matching
-      : RAW_QUESTIONS.filter((q) => q.topicIndex === tIdx);
+  TOPICS.forEach((topic, tIdx) => {
+    QUESTION_BANK[`${lvl}-${tIdx}`] = expandToThirtyQuestions(baseLvl, tIdx);
+
+    const cardsMap = new Map();
+    CORE_QUESTIONS
+      .filter((q) => q.topicIndex === tIdx && (q.level === baseLvl || baseLvl === "B2"))
+      .forEach((q) => {
+        if (q.type === "match") {
+          q.pairs.forEach(([eu, es]) => cardsMap.set(eu, es));
+        } else if (q.type === "order") {
+          const esPhrase = q.question.replace(/^Ordena las palabras para decir «|»:$|^Ordena las palabras para decir |:$/g, "");
+          cardsMap.set(q.answer, esPhrase);
+        } else if (q.type === "choice") {
+          const matchWord = q.question.match(/«([^»]+)»/);
+          if (matchWord) cardsMap.set(matchWord[1], q.answer);
+        }
+      });
+
+    FLASHCARDS_BY_LEVEL_TOPIC[`${lvl}-${tIdx}`] = Array.from(cardsMap.entries());
   });
 });
-
-export const FLASHCARDS = Object.fromEntries(
-  TOPICS.map((t, idx) => {
-    const cards = RAW_QUESTIONS
-      .filter((q) => q.topicIndex === idx && q.type === "match")
-      .flatMap((q) => q.pairs);
-    return [t.name, cards];
-  })
-);
 
 export const GRAMMAR = [
   ["Pronombres personales", "ni (yo), zu (tú), hura (él/ella), gu (nosotros/as), zuek (vosotros/as), haiek (ellos/as)."],
