@@ -12,6 +12,17 @@ const load = () => {
 };
 const unitId = (level, index) => `${level}-${index}`;
 
+const LEVEL_LABELS = {
+  "A1.1": "Nivel 1 (A1.1)",
+  "A1.2": "Nivel 2 (A1.2)",
+  "A2.1": "Nivel 3 (A2.1)",
+  "A2.2": "Nivel 4 (A2.2)",
+  "B1.1": "Nivel 5 (B1.1)",
+  "B1.2": "Nivel 6 (B1.2)",
+  "B2.1": "Nivel 7 (B2.1)",
+  "B2.2": "Nivel 8 (B2.2)"
+};
+
 const shuffleArray = (arr) => {
   const copy = [...arr];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -43,6 +54,8 @@ const buildUnitQuestions = (level, index) => {
   });
 };
 
+const ZIGZAG_OFFSETS = [0, 58, 0, -58, 0, 58, 0, -58, 0, 58];
+
 function App() {
   const [progress, setProgress] = useState(load);
   const [tab, setTab] = useState("Practicar");
@@ -56,7 +69,6 @@ function App() {
   const [selected, setSelected] = useState("");
   const [feedback, setFeedback] = useState("");
 
-  // Estado específico para el ejercicio de emparejar 5 + 5 en 2 columnas
   const [leftPick, setLeftPick] = useState("");
   const [rightPick, setRightPick] = useState("");
   const [matchedLeft, setMatchedLeft] = useState([]);
@@ -100,7 +112,7 @@ function App() {
       const item = {
         id: q.id,
         level,
-        topic: TOPICS[unit].name,
+        topic: TOPICS[unit]?.name || `Subnivel ${unit + 1}`,
         question: q.question,
         chosen,
         answer: expected || q.answer || "Revisar pareja/frase",
@@ -205,87 +217,86 @@ function App() {
     }
   };
 
-  const topicCards = TOPICS.map((t, i) => (
-    <button
-      className={`topic ${unlocked(level, i) ? "" : "locked"} ${passed.has(unitId(level, i)) ? "done" : ""}`}
-      key={t.name}
-      disabled={!unlocked(level, i)}
-      onClick={() => start(i)}
-    >
-      <span className="topic-number">{passed.has(unitId(level, i)) ? "✓" : i + 1}</span>
-      <span>
-        <b>{t.name}</b>
-        <small>{t.grammar}</small>
-      </span>
-      <span>{unlocked(level, i) ? "›" : "🔒"}</span>
-    </button>
-  ));
-
-  const allUnits = LEVELS.length * TOPICS.length;
+  const levelNumber = LEVELS.indexOf(level) + 1;
+  const sublevels = Array.from({ length: 10 }, (_, i) => i);
+  const allUnits = LEVELS.length * 10;
   const percentage = Math.round((progress.passed.length / allUnits) * 100);
   const currentCards = FLASHCARDS[TOPICS[cardIndex]?.name] || [];
 
   return (
     <div className="app-shell">
-      <header>
-        <div className="brand-mark">E</div>
-        <div>
-          <strong>Euskara</strong>
-          <small>Ikasi · Praktikatu · Hobetu</small>
+      <header className="top-bar">
+        <div className="level-dropdown-wrap">
+          <select
+            aria-label="Seleccionar nivel"
+            className="level-dropdown"
+            value={level}
+            onChange={(e) => {
+              setLevel(e.target.value);
+              setScreen("path");
+            }}
+          >
+            {LEVELS.map((l) => (
+              <option key={l} value={l}>
+                {LEVEL_LABELS[l] || l}
+              </option>
+            ))}
+          </select>
         </div>
-        <span className="header-spacer" />
-        <span className="streak">✦ {progress.passed.length}/{allUnits}</span>
+        <span className="sublevels-counter">
+          <span className="flame-ico">🔥</span>
+          {progress.passed.length} Subniveles
+        </span>
       </header>
 
       <main>
         {tab === "Practicar" && (
           <section>
             {screen === "path" && (
-              <>
-                <div className="hero">
-                  <span className="eyebrow">ZURE EUSKARA BIDEA</span>
-                  <h1>
-                    Aprende euskera
-                    <br />
-                    paso a paso.
-                  </h1>
-                  <p>Completa unidades por nivel, supera retos y avanza a tu ritmo.</p>
+              <div className="route-view">
+                <div className="route-header">
+                  <h1>Ruta Nivel {levelNumber}</h1>
+                  <p>Supera los 10 subniveles (mínimo 27/30 aciertos)</p>
                 </div>
 
-                <label className="field-label">Tu nivel</label>
-                <div className="level-select">
-                  {LEVELS.map((l) => (
-                    <button key={l} className={level === l ? "active" : ""} onClick={() => setLevel(l)}>
-                      {l}
-                    </button>
-                  ))}
+                <div className="route-nodes">
+                  {sublevels.map((i) => {
+                    const isPassed = passed.has(unitId(level, i));
+                    const isUnlocked = unlocked(level, i);
+                    const offsetX = ZIGZAG_OFFSETS[i % ZIGZAG_OFFSETS.length];
+                    return (
+                      <div
+                        key={i}
+                        className="node-slot"
+                        style={{ transform: `translateX(${offsetX}px)` }}
+                      >
+                        <button
+                          type="button"
+                          disabled={!isUnlocked}
+                          onClick={() => start(i)}
+                          className={`node-circle ${isPassed ? "passed" : isUnlocked ? "active-node" : "locked-node"}`}
+                          title={TOPICS[i]?.name || `Subnivel ${i + 1}`}
+                        >
+                          {isPassed ? "✓" : isUnlocked ? i + 1 : "🔒"}
+                        </button>
+                        <span className={`node-label ${!isUnlocked ? "muted-label" : ""}`}>
+                          Subnivel {i + 1}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
-
-                <div className="section-heading">
-                  <div>
-                    <span className="eyebrow">CAMINO DE APRENDIZAJE</span>
-                    <h2>{level}</h2>
-                  </div>
-                  <span className="muted">
-                    {TOPICS.filter((_, i) => passed.has(unitId(level, i))).length}/{TOPICS.length} aprobados
-                  </span>
-                </div>
-
-                <div className="path-list">{topicCards}</div>
-                <p className="hint">
-                  Cada examen tiene 30 preguntas del nivel seleccionado. Necesitas 27 aciertos para desbloquear la siguiente unidad.
-                </p>
-              </>
+              </div>
             )}
 
             {screen === "quiz" && (
               <>
                 <button className="back" onClick={() => setScreen("path")}>
-                  ← Volver al camino
+                  ← Volver a la ruta
                 </button>
                 <div className="quiz-top">
                   <span>
-                    {level} · {TOPICS[unit].name}
+                    {LEVEL_LABELS[level]} · Subnivel {unit + 1} ({TOPICS[unit]?.name})
                   </span>
                   <b>{questionIndex + 1}/30</b>
                 </div>
@@ -402,19 +413,19 @@ function App() {
             {screen === "result" && (
               <div className="result-card">
                 <div className="result-icon">{(progress.best[unitId(level, unit)] || 0) >= 27 ? "🏆" : "💪"}</div>
-                <span className="eyebrow">RESULTADO DEL EXAMEN</span>
+                <span className="eyebrow">RESULTADO DEL SUBNIVEL</span>
                 <h1>{progress.best[unitId(level, unit)] || 0}/30</h1>
-                <h2>{(progress.best[unitId(level, unit)] || 0) >= 27 ? "¡Unidad aprobada!" : "Sigue practicando"}</h2>
+                <h2>{(progress.best[unitId(level, unit)] || 0) >= 27 ? "¡Subnivel superado!" : "Sigue practicando"}</h2>
                 <p>
                   {(progress.best[unitId(level, unit)] || 0) >= 27
-                    ? "Has desbloqueado la siguiente unidad."
+                    ? "Has desbloqueado el siguiente subnivel."
                     : "Necesitas al menos 27 respuestas correctas."}
                 </p>
                 <button className="primary full" onClick={() => setScreen("path")}>
-                  Volver al camino
+                  Volver a la ruta
                 </button>
                 <button className="secondary full" onClick={() => start(unit)}>
-                  Repetir examen
+                  Repetir subnivel
                 </button>
               </div>
             )}
@@ -424,9 +435,8 @@ function App() {
         {tab === "Aprender" && (
           <section>
             <div className="page-intro">
-              <span className="eyebrow">TU ESPACIO DE ESTUDIO</span>
               <h1>Aprender</h1>
-              <p>Consulta vocabulario y conceptos clave.</p>
+              <p>Consulta vocabulario, gramática, ortografía y pronunciación.</p>
             </div>
             <div className="tabs">
               {["Flashcards", "Gramática", "Ortografía", "Pronunciación"].map((x) => (
@@ -438,7 +448,7 @@ function App() {
 
             {learnTab === "Flashcards" && (
               <>
-                <label className="field-label">Campo semántico</label>
+                <label className="field-label">Tema / Campo semántico</label>
                 <div className="level-select">
                   {TOPICS.map((t, i) => (
                     <button
@@ -454,7 +464,7 @@ function App() {
                   ))}
                 </div>
                 <div className="flashcard" onClick={() => setFlipped(!flipped)}>
-                  <span className="eyebrow">{TOPICS[cardIndex].name.toUpperCase()} · TOCA PARA GIRAR</span>
+                  <span className="eyebrow">{TOPICS[cardIndex]?.name.toUpperCase()} · TOCA PARA GIRAR</span>
                   <strong>{currentCards[0]?.[flipped ? 1 : 0] || "—"}</strong>
                   <small>{flipped ? "Español" : "Euskera"}</small>
                 </div>
@@ -487,19 +497,18 @@ function App() {
           </section>
         )}
 
-        {tab === "Evolución" && (
+        {tab === "Progreso" && (
           <section>
             <div className="page-intro">
-              <span className="eyebrow">AURRERAPENA</span>
-              <h1>Tu evolución</h1>
-              <p>Consulta tus avances y refuerza lo que más cuesta.</p>
+              <h1>Tu progreso</h1>
+              <p>Revisa tus subniveles completados y corrige tus errores.</p>
             </div>
             <div className="tabs">
               <button className={evoTab === "Progreso" ? "chosen" : ""} onClick={() => setEvoTab("Progreso")}>
-                Progreso
+                Resumen
               </button>
               <button className={evoTab === "Repaso" ? "chosen" : ""} onClick={() => setEvoTab("Repaso")}>
-                Repaso
+                Repaso ({progress.pending.length})
               </button>
             </div>
 
@@ -508,7 +517,7 @@ function App() {
                 <div className="stats-grid">
                   <div className="stat">
                     <strong>{progress.passed.length}</strong>
-                    <span>Unidades aprobadas</span>
+                    <span>Subniveles superados</span>
                   </div>
                   <div className="stat">
                     <strong>{progress.completedQuestions}</strong>
@@ -529,18 +538,16 @@ function App() {
                     <div style={{ width: `${percentage}%` }} />
                   </div>
                   <p className="muted">
-                    {progress.passed.length} de {allUnits} unidades completadas en los 8 niveles.
+                    {progress.passed.length} de {allUnits} subniveles en los 8 niveles.
                   </p>
                 </div>
 
                 {LEVELS.map((l) => (
                   <div className="level-progress" key={l}>
                     <b>{l}</b>
-                    <span>
-                      {TOPICS.filter((_, i) => passed.has(unitId(l, i))).length}/{TOPICS.length}
-                    </span>
+                    <span>{sublevels.filter((i) => passed.has(unitId(l, i))).length}/10</span>
                     <div className="mini-track">
-                      <i style={{ width: `${(TOPICS.filter((_, i) => passed.has(unitId(l, i))).length / TOPICS.length) * 100}%` }} />
+                      <i style={{ width: `${sublevels.filter((i) => passed.has(unitId(l, i))).length * 10}%` }} />
                     </div>
                   </div>
                 ))}
@@ -589,20 +596,21 @@ function App() {
 
       <nav className="bottom-nav">
         {[
-          ["Practicar", "◈"],
-          ["Aprender", "▤"],
-          ["Evolución", "⌁"]
-        ].map(([name, ico]) => (
+          { id: "Practicar", label: "Practicar", icon: "🎯" },
+          { id: "Aprender", label: "Aprender", icon: "📖" },
+          { id: "Progreso", label: "Progreso", icon: "📊" }
+        ].map((item) => (
           <button
-            key={name}
-            className={tab === name ? "nav-active" : ""}
+            key={item.id}
+            type="button"
+            className={tab === item.id ? "nav-active" : ""}
             onClick={() => {
-              setTab(name);
+              setTab(item.id);
               setScreen("path");
             }}
           >
-            <span>{ico}</span>
-            {name}
+            <span className="nav-icon">{item.icon}</span>
+            <span>{item.label}</span>
           </button>
         ))}
       </nav>
