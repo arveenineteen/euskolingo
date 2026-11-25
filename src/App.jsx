@@ -67,11 +67,7 @@ const buildUnitQuestions = (level, index, pendingIds = [], sessionSalt = 0) => {
 
   return base.slice(0, 30).map((q, i) => prepareMatchQuestion({ ...q, id: `${level}-${index}-${i}` }));
 };
-  const stored = QUESTION_BANK[unitId(level, index)] || [];
- ];
-  return base.slice(0, 30).map((q, i) => prepareMatchQuestion({ ...q, id: `${level}-${index}-${i}` }));
-};
-
+ 
 const ZIGZAG_OFFSETS = [0, 58, 0, -58, 0, 58, 0, -58, 0, 58];
 
 function App() {
@@ -199,7 +195,7 @@ function App() {
         explanation: q.explanation || ""
       };
       const item = {
-        conceptId: q.conceptId,
+        conceptId: q.conceptId || q._reviewItem?.conceptId || q.id,
         id: q.id,
         level: q._reviewItem?.level || level,
         topic: q._reviewItem?.topic || TOPICS[unit]?.name || `Subnivel ${unit + 1}`,
@@ -234,7 +230,7 @@ function App() {
     const acceptedList = Array.isArray(current.acceptedAnswers) && current.acceptedAnswers.length > 0
   ? current.acceptedAnswers
   : [current.answer];
-    const ok = acceptedList.some((ans) => normalizeText(value) === normalizeText(ans));;
+    const ok = acceptedList.some((ans) => normalizeText(value) === normalizeText(ans));
     setFeedback(ok ? "¡Correcto!" : `No es correcto. Respuesta: ${current.answer}`);
     if (reviewSessionActive) {
       if (ok) markReviewItemSolved(current);
