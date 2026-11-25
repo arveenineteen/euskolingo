@@ -357,3 +357,132 @@ export const PRONUNCIATION = [
   ["Dígrafos", "«tx» suena parecido a ch; «ts» y «tz» son africadas distintas según la palabra."],
   ["Acentuación", "No se marca normalmente con tilde y varía según dialecto, palabra y entonación."]
 ];
+export const VOCAB_CONCEPTS = (() => {
+  const map = new Map();
+
+  CORE_QUESTIONS.forEach((q, idx) => {
+    const tIdx = q.topicIndex ?? 0;
+    const lvl = q.level || "A1";
+
+    if (q.type === "match" && Array.isArray(q.pairs)) {
+      q.pairs.forEach(([eu, es], pIdx) => {
+        const id = `vocab-${tIdx}-${lvl}-${eu.toLowerCase().replace(/[^a-z0-9ñáéíóúü]+/gi, "-")}-${idx}-${pIdx}`;
+        if (!map.has(id)) {
+          map.set(id, {
+            id,
+            eu,
+            es,
+            pos: "expresión",
+            level: lvl,
+            topicIndex: tIdx,
+            distractorsEs: q.pairs.filter(([, x]) => x !== es).map(([, x]) => x),
+            distractorsEu: q.pairs.filter(([x]) => x !== eu).map(([x]) => x),
+            explanation: `«${eu}» significa «${es}».`
+          });
+        }
+      });
+    } else if (q.type === "choice") {
+      const m = q.question.match(/«([^»]+)»/);
+      const euWord = m ? m[1] : q.answer;
+      const esMeaning = q.answer;
+      const id = `vocab-${tIdx}-${lvl}-choice-${idx}`;
+      map.set(id, {
+        id,
+        eu: euWord,
+        es: esMeaning,
+        pos: "término",
+        level: lvl,
+        topicIndex: tIdx,
+        distractorsEs: (q.options || []).filter((o) => o !== esMeaning),
+        explanation: `«${euWord}» corresponde a «${esMeaning}».`
+      });
+    } else if (q.type === "order" && Array.isArray(q.words) && q.words.length >= 2) {
+      const esPhrase = q.question
+        .replace(/^Ordena las palabras para decir «|»:$|^Ordena las palabras para decir |:$/g, "")
+        .trim();
+      const id = `vocab-phrase-${tIdx}-${lvl}-order-${idx}`;
+      map.set(id, {
+        id,
+        eu: q.answer,
+        es: esPhrase,
+        pos: "frase",
+        level: lvl,
+        topicIndex: tIdx,
+        exampleEu: q.answer,
+        exampleEs: esPhrase,
+        tokensEu: q.words,
+        acceptedAnswers: [q.answer],
+        explanation: `Orden habitual en la frase: «${q.answer}».`
+      });
+    }
+  });
+
+  return Array.from(map.values());
+})();
+
+export const GRAMMAR_CONCEPTS = [
+  {
+    id: "gram-negacion-ez",
+    ruleId: "negacion-ez",
+    level: "A2",
+    topicIndex: 1,
+    promptEs: "No llego tarde",
+    tokensEu: ["Ez", "naiz", "berandu", "iristen"],
+    acceptedAnswers: ["Ez naiz berandu iristen"],
+    wrongOptions: [
+      "Naiz ez berandu iristen",
+      "Berandu iristen naiz ez",
+      "Ez da berandu iristen"
+    ],
+    commonTrap: "«Ez» va delante del verbo conjugado y cambia la estructura",
+    explanation: "En euskera, «ez» precede al verbo conjugado («naiz»)."
+  },
+  {
+    id: "gram-inesivo-non-nora",
+    ruleId: "inesivo-n-ean",
+    level: "A2",
+    topicIndex: 3,
+    promptEs: "La leche está en la nevera (ubicación NON)",
+    tokensEu: ["Hozkailuan", "esnea", "dago"],
+    acceptedAnswers: ["Hozkailuan esnea dago"],
+    wrongOptions: [
+      "Hozkailura esnea dago",
+      "Hozkailutik esnea dago",
+      "Hozkailua esnea dago"
+    ],
+    commonTrap: "No confundir ubicación (NON -> -n/-an/-ean) con destino (NORA -> -ra)",
+    explanation: "Indica dónde está algo (NON): «hozkailuan»."
+  },
+  {
+    id: "gram-ergativo-k",
+    ruleId: "ergativo-k",
+    level: "A2",
+    topicIndex: 14,
+    promptEs: "El gato bebe leche (sujeto transitivo con -k)",
+    tokensEu: ["Katuak", "esnea", "edaten", "du"],
+    acceptedAnswers: ["Katuak esnea edaten du"],
+    wrongOptions: [
+      "Katua esnea edaten du",
+      "Katuak esnea edaten da",
+      "Katua esnea edaten da"
+    ],
+    commonTrap: "En verbos transitivos con auxiliar «du», el agente lleva marca ergativa (-ak)",
+    explanation: "«Katuak» lleva -ak por ser sujeto de un verbo transitivo («edaten du»)."
+  },
+  {
+    id: "gram-gustatu-nori",
+    ruleId: "nor-nori-gustatu",
+    level: "A1",
+    topicIndex: 11,
+    promptEs: "Me gusta mucho la música",
+    tokensEu: ["Asko", "gustatzen", "zait", "musika"],
+    acceptedAnswers: ["Asko gustatzen zait musika"],
+    wrongOptions: [
+      "Asko gustatzen naiz musika",
+      "Asko gustatzen dut musika",
+      "Musika gustatzen da ni"
+    ],
+    commonTrap: "«Gustatu» funciona como «gustarme» con auxiliar de tipo «zait»",
+    explanation: "Se expresa con «gustatzen zait» para «me gusta»."
+  }
+];
