@@ -3,13 +3,13 @@ import {
   LEVELS,
   LEVEL_LABELS,
   TOPICS,
-  QUESTION_BANK,
   FLASHCARDS_BY_LEVEL_TOPIC,
   GRAMMAR,
   SPELLING,
-  PRONUNCIATION
+  PRONUNCIATION,
+  VOCAB_CONCEPTS,
+  GRAMMAR_CONCEPTS
 } from "./data.js";
-import { VOCAB_CONCEPTS, GRAMMAR_CONCEPTS } from "./data.js";
 import { generateSessionQuestions, normalizeText } from "./questionGenerator.js";
 const KEY = "euskara-progress-v1";
 const fresh = () => ({ passed: [], pending: [], corrected: [], best: {}, completedQuestions: 0 });
@@ -68,12 +68,7 @@ const buildUnitQuestions = (level, index, pendingIds = [], sessionSalt = 0) => {
   return base.slice(0, 30).map((q, i) => prepareMatchQuestion({ ...q, id: `${level}-${index}-${i}` }));
 };
   const stored = QUESTION_BANK[unitId(level, index)] || [];
-  const base = stored.length > 0 ? stored : [{
-    type: "choice",
-    question: "Pregunta de demostración.",
-    options: ["Opción A", "Opción B", "Opción C", "Opción D"],
-    answer: "Opción A"
-  }];
+ ];
   return base.slice(0, 30).map((q, i) => prepareMatchQuestion({ ...q, id: `${level}-${index}-${i}` }));
 };
 
