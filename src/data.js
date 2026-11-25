@@ -353,9 +353,46 @@ export const SPELLING = [
 ];
 
 export const PRONUNCIATION = [
-  ["Vocales", "Las cinco vocales a, e, i, o, u mantienen una pronunciación estable y clara."],
-  ["Dígrafos", "«tx» suena parecido a ch; «ts» y «tz» son africadas distintas según la palabra."],
-  ["Acentuación", "No se marca normalmente con tilde y varía según dialecto, palabra y entonación."]
+  [
+    "1. Vocales y ausencia de tildes",
+    "Las cinco vocales (a, e, i, o, u) se pronuncian abiertas y claras, igual que en español y sin diptongos cerrados. La diferencia visual es que en euskera no existen las tildes gráficas (á, é, í, ó, ú)."
+  ],
+  [
+    "2. Las tres sibilantes: S, Z y X",
+    "El euskera distingue tres sonidos distintos: S es una s apical (como en el norte de España, curvando ligeramente la punta de la lengua hacia arriba; ej. su = fuego). Z es una s predorsal (como en Andalucía, Canarias o Hispanoamérica, con la punta de la lengua tocando los dientes inferiores; nunca suena como la z de 'zapato'; ej. zu = tú). X suena como la 'sh' inglesa de show o la 'ch' francesa (ej. xagu = ratón)."
+  ],
+  [
+    "3. Dígrafos africados: TS, TZ y TX",
+    "Son la versión africada de las tres sibilantes anteriores, pronunciando una 't' justo delante: TS suena como t + s apical (ej. hots = sonido); TZ suena como t + s predorsal, similar a la 'zz' italiana de pizza (ej. hitz = palabra); TX suena como la 'ch' española de 'coche' (ej. etxe = casa)."
+  ],
+  [
+    "4. La H en el estándar",
+    "En el euskera unificado (euskara batua) y en los dialectos peninsulares la h es muda, como en español, y sirve para marcar pausas o por tradición ortográfica (ej. herri = pueblo se pronuncia /erri/). En Iparralde (País Vasco francés) sí se aspira suavemente."
+  ],
+  [
+    "5. Pronunciación de la J",
+    "No es tan gutural como la 'j' de 'jamón' en todo el territorio: puede sonar como 'y' española de 'yo' (muy extendida en Vizcaya, Álava y buena parte de Navarra; ej. jan = comer -> /yan/) o como 'j' suave (muy común en Guipúzcoa; /jan/)."
+  ],
+  [
+    "6. La G siempre suave",
+    "La g suena siempre como en 'gato' o 'guerra', incluso delante de e o i; nunca como la 'j' española (ej. gizon = hombre se pronuncia /guisón/, con z suave)."
+  ],
+  [
+    "7. Reglas de la R y préstamos",
+    "Entre vocales es suave (vibrante simple, como en 'caro'; ej. ere = también). Se escribe rr entre vocales o va a final de palabra cuando es fuerte (vibrante múltiple, como en 'perro'; ej. herri, ur = agua, nor = quién). En euskera patrimonial no empiezan palabras por r; al adaptar préstamos se añade vocal inicial (errege = rey, irrati = radio)."
+  ],
+  [
+    "8. Palatales LL y Ñ y palatalización",
+    "LL y Ñ suenan como en español ('lluvia', 'niño'). Además, cuando una 'i' precede a l, n o t, suele producirse palatalización ('mojado') hacia ll, ñ o tt (similar a ch suave), aunque no se escriba así: por ejemplo Miren (/Miren/ o /Mireñ/) o aita (padre, a menudo /aitta/)."
+  ],
+  [
+    "9. Letras C, Q, V, W e Y",
+    "No forman parte del alfabeto propio del euskera; si aparecen, indican extranjerismos o nombres propios no adaptados. Los sonidos de c/qu se escriben con K (kafe = café) y el sonido de v se representa con B."
+  ],
+  [
+    "10. Acentuación flexible",
+    "Al no haber tildes gráficas, el acento suele recaer en la segunda sílaba empezando por el principio (e-txe-a, gi-zo-na) o ser suave y repartido, con ligera elevación al final de la frase. No lleva acentuación esdrújula del español (se dice Eus-ka-di, no 'Eúskadi')."
+  ]
 ];
 export const VOCAB_CONCEPTS = (() => {
   const map = new Map();
