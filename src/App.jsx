@@ -9,7 +9,8 @@ import {
   SPELLING,
   PRONUNCIATION
 } from "./data.js";
-
+import { VOCAB_CONCEPTS, GRAMMAR_CONCEPTS } from "./data.js";
+import { generateSessionQuestions, normalizeText } from "./questionGenerator.js";
 const KEY = "euskara-progress-v1";
 const fresh = () => ({ passed: [], pending: [], corrected: [], best: {}, completedQuestions: 0 });
 const load = () => {
@@ -41,7 +42,31 @@ const prepareMatchQuestion = (q) => {
   };
 };
 
-const buildUnitQuestions = (level, index) => {
+const buildUnitQuestions = (level, index, pendingIds = [], sessionSalt = 0) => {
+  const seed = `${level}-${index}-${sessionSalt}`
+    .split("")
+    .reduce((acc, ch) => (acc * 31 + ch.charCodeAt(0)) % 2147483647, 17);
+
+  const generated = generateSessionQuestions({
+    vocabConcepts: VOCAB_CONCEPTS,
+    grammarConcepts: GRAMMAR_CONCEPTS,
+    topicIndex: index,
+    level,
+    count: 30,
+    seed,
+    pendingIds,
+    cooldownConcepts: 4
+  });
+
+  const base = generated.length > 0 ? generated : [{
+    type: "choice",
+    question: "Pregunta de demostración.",
+    options: ["Opción A", "Opción B", "Opción C", "Opción D"],
+    answer: "Opción A"
+  }];
+
+  return base.slice(0, 30).map((q, i) => prepareMatchQuestion({ ...q, id: `${level}-${index}-${i}` }));
+};
   const stored = QUESTION_BANK[unitId(level, index)] || [];
   const base = stored.length > 0 ? stored : [{
     type: "choice",
@@ -94,8 +119,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem(KEY, JSON.stringify(progress));
   }, [progress]);
-
-  const questions = useMemo(() => buildUnitQuestions(level, unit), [level, unit]);
+  const [attemptSalt, setAttemptSalt] = useState(0);
+  const questions = useMemo(
+  () => buildUnitQuestions(level, unit, progress.pending.map((x) => x.conceptId || x.id), attemptSalt),
+  [level, unit, attemptSalt]
+);
   const activeQuestions = reviewSessionActive ? reviewQuestions : questions;
   const activeIdx = reviewSessionActive ? reviewIndex : questionIndex;
   const current = activeQuestions[activeIdx];
@@ -126,6 +154,7 @@ function App() {
   };
 
   const start = (i) => {
+    setAttemptSalt((s) => s + 1);
     setReviewSessionActive(false);
     setReviewFinished(false);
     setUnit(i);
@@ -175,6 +204,7 @@ function App() {
         explanation: q.explanation || ""
       };
       const item = {
+        conceptId: q.conceptId,
         id: q.id,
         level: q._reviewItem?.level || level,
         topic: q._reviewItem?.topic || TOPICS[unit]?.name || `Subnivel ${unit + 1}`,
@@ -206,7 +236,10 @@ function App() {
   const choose = (value) => {
     if (feedback) return;
     setSelected(value);
-    const ok = value.trim() === current.answer.trim();
+    const acceptedList = Array.isArray(current.acceptedAnswers) && current.acceptedAnswers.length > 0
+  ? current.acceptedAnswers
+  : [current.answer];
+    const ok = acceptedList.some((ans) => normalizeText(value) === normalizeText(ans));;
     setFeedback(ok ? "¡Correcto!" : `No es correcto. Respuesta: ${current.answer}`);
     if (reviewSessionActive) {
       if (ok) markReviewItemSolved(current);
